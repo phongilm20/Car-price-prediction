@@ -1,129 +1,114 @@
-# 🚗 Regression Project: Used Car Price Prediction
+# 🚗 Used Car Price Prediction
 
-[![Python 3.x](https://img.shields.io/badge/Python-3.x-blue.svg)](https://www.python.org/)
+[![Python 3.x](https://img.shields.io/badge/Python-3.x-blue.svg)](https://www.python.org/)  
 [![Scikit-learn](https://img.shields.io/badge/Scikit--learn-v1.4.1-orange.svg)](https://scikit-learn.org/stable/)
 
-## 🌟 1. Project Overview
+## 🌟 Project Overview
 
-This is an academic Machine Learning project focused on building and deploying a regression model to predict the selling price of used cars. The project emphasizes the adoption of **AI Engineering** standards by utilizing a **Scikit-learn Pipeline** to ensure the model's consistency, reliability, and deployability.
+This academic Machine Learning project focuses on building a regression model to predict **used car prices**. The project adopts **AI engineering best practices** by using a **Scikit-learn Pipeline** to ensure consistent preprocessing, model reliability, and deployability.
 
-* **Objective:** Predict the car's selling price based on factors such as manufacturing year, kilometers driven, brand, fuel type, etc.
-* **Core Model:** Random Forest Regressor.
-* **Technical Highlight:** Implementation of a robust **ML Pipeline** and proper handling of **Unseen Features** (`handle_unknown` in One-Hot Encoding).
+**Key Points:**
 
-***
+- **Objective:** Predict a car's selling price based on features like manufacturing year, kilometers driven, brand, fuel type, etc.  
+- **Core Model:** Random Forest Regressor  
+- **Technical Highlight:** Full **ML Pipeline** with robust handling of **unseen categorical features** (`handle_unknown='ignore'` in One-Hot Encoding).
 
-## 🛠️ 2. Technology Stack
+---
 
-| Area | Tool/Library | Technical Purpose |
+## 🛠️ Technology Stack
+
+| Area | Tool/Library | Purpose |
 | :--- | :--- | :--- |
-| **Data Science Core** | `Pandas`, `NumPy` | Data manipulation, cleaning, and numerical operations. |
-| **ML Engineering** | `Scikit-learn` | Building the **`Pipeline`**, `ColumnTransformer` (Preprocessor), and the model. |
-| **Deployment Prep** | `Joblib` / `Pickle` | **Model Serialization** (Saving the entire workflow). |
-| **EDA/Visualization** | `Matplotlib`, `Seaborn` | Exploratory data analysis and feature relationship plotting. |
+| **Data Science** | `Pandas`, `NumPy` | Data manipulation, cleaning, numerical operations |
+| **ML Engineering** | `Scikit-learn` | Building **Pipeline**, `ColumnTransformer`, model training |
+| **Deployment** | `Joblib` / `Pickle` | Model serialization (save/load pipeline) |
+| **Visualization / EDA** | `Matplotlib`, `Seaborn` | Exploratory data analysis, plotting relationships |
 
-***
+---
 
-## 💡 3. Academic Methodology & Model Artifacts
+## 💡 Methodology & Model Artifacts
 
-### 3.1. Feature Engineering
+### 1. Feature Engineering
 
-The entire preprocessing logic is encapsulated within a `ColumnTransformer` to apply different transformations to different column types:
+- **Categorical Features:** One-Hot Encoding with `handle_unknown='ignore'` to avoid errors with unseen categories.  
+- **Numerical Features:** Standardized using `StandardScaler` to prevent scale bias.  
 
-* **Categorical Data:** Handled using `OneHotEncoder` with the critical parameter `handle_unknown='ignore'`. **This definitively resolves the `ValueError` concerning missing/unseen feature names in new data.**
-* **Numerical Data:** Standardized using `StandardScaler` to bring numerical features (`year`, `km_driven`) to a common scale, preventing model bias.
+All preprocessing is encapsulated in a `ColumnTransformer` inside the pipeline.
 
-### 3.2. ML Pipeline Construction
-
-**Leveraging `sklearn.pipeline.Pipeline`**
+### 2. ML Pipeline Construction
 
 ```python
-# Core Technical Structure:
+from sklearn.pipeline import Pipeline
+from sklearn.compose import ColumnTransformer
+from sklearn.ensemble import RandomForestRegressor
+
 model_pipeline = Pipeline(steps=[
-    ('preprocessor', ColumnTransformer(...)), # Consistent preprocessing step
-    ('regressor', RandomForestRegressor())    # Regression model
+    ('preprocessor', ColumnTransformer(...)),  # Preprocessing logic
+    ('regressor', RandomForestRegressor())     # Random Forest Regressor
 ])
-```
+3. Model Evaluation
+Model is trained on X_train and evaluated on X_test. Metrics:
 
-### 3.3. Model Evaluation & Project Structure
+Metric	Description	Result (Update Later)
+R² Score	Coefficient of determination	[UPDATE]
+MAE	Mean Absolute Error	[UPDATE]
+RMSE	Root Mean Squared Error	[UPDATE]
 
-The model is trained on the **$X_{train}$** set and evaluated on the **$X_{test}$** set based on the following academic metrics:
+Note: Update metrics after training the model.
 
-| Metric | Formula/Significance | Result (To be Updated) |
-| :--- | :--- | :--- |
-| **$R^2$ Score** | Coefficient of Determination (Model fit) | **[UPDATE]** |
-| **MAE** | Mean Absolute Error (Average monetary error) | **[UPDATE]** |
-| **RMSE** | Root Mean Squared Error (Emphasizes larger errors) | **[UPDATE]** |
-
-*(\*\*Note:\*\* Please update the $R^2$, MAE, and RMSE values here once you complete your model training.)*
-
-```
+4. Project Structure
 car-price-prediction/
 ├── data/
 │   └── car_data.csv          # Raw dataset
 ├── notebooks/
-│   ├── 01_EDA_Preprocessing.ipynb  # Exploratory Analysis and Feature Engineering
-│   └── 02_Model_Training.ipynb     # Training, Evaluation, and .pkl Export
+│   ├── 01_EDA_Preprocessing.ipynb  # EDA & feature engineering
+│   └── 02_Model_Training.ipynb     # Training, evaluation, export
 ├── artifacts/
-│   └── model_pipeline.pkl    # 🔑 Saved model file (includes Preprocessor)
+│   └── model_pipeline.pkl    # Saved pipeline (preprocessor + model)
 ├── src/
-│   └── train.py              # Formal training script 
-└── requirements.txt          # List of necessary libraries
-```
+│   └── train.py              # Training script
+└── requirements.txt          # Dependencies
+🚀 Getting Started
+1. Environment Setup
+# Clone repository
+git clone https://github.com/phongilm20/Car-price-prediction.git
+cd Car-price-prediction
 
------
-
-## 🚀 5. Getting Started
-
-### 5.1. Environment Setup
-
-```bash
-# 1. Clone repository
-git clone https://github.com/your-username/car-price-prediction.git
-cd car-price-prediction
-
-# 2. Create and activate a virtual environment (AI Engineer best practice)
+# Create virtual environment
 python -m venv venv
-source venv/bin/activate 
+source venv/bin/activate  # Linux/Mac
+# venv\Scripts\activate   # Windows
 
-# 3. Install required libraries
+# Install dependencies
 pip install -r requirements.txt
-```
+2. Model Training
+Run 02_Model_Training.ipynb to:
 
-### 5.2. Model Training
+Load and preprocess the dataset
 
-Open and run the `02_Model_Training.ipynb` notebook to:
+Train model_pipeline
 
-1. Load and preprocess the data.  
-2. Train the `model_pipeline`.  
-3. Save the trained model to the `artifacts/` folder.
+Save trained pipeline to artifacts/
 
------
+✅ Deployment & Inference
+Predicting new data is simple: load the pipeline and pass raw data.
 
-## ✅ 6. Deployment and Inference
-
-To make a prediction with new data, you only need to load the single `model_pipeline.pkl` file and pass the **RAW DATA** to the `.predict()` function.
-
-```python
 import joblib
 import pandas as pd
 
-# 1. Load the complete Pipeline (Preprocessor + Model)
+# Load trained pipeline
 model = joblib.load('artifacts/model_pipeline.pkl')
 
-# 2. New Data (MUST BE RAW DATA, not yet OHE/Scaled)
+# Prepare new raw data
 new_data = pd.DataFrame({
-    'year': [2023], 
+    'year': [2023],
     'km_driven': [5000],
     'transmission': ['Manual'],
-    'brand': ['Maruti'], 
+    'brand': ['Maruti'],
     'owner': ['First Owner'],
-    # ... ensure all other raw columns are present
+    # ... include all other required columns
 })
 
-# 3. Predict: The Pipeline automatically preprocesses this raw data
-predicted_price = model.predict(new_data) 
+# Predict
+predicted_price = model.predict(new_data)
 print(f"Predicted price: {predicted_price[0]}")
-```
-
------
